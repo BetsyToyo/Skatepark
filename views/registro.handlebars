@@ -1,22 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="estilos.css" />
-  </head>
-  <body>
-    <h1>Skate Park</h1>
-
-    <div class="py-4">
+{{>header}}
+<div class="py-4">
       <h2>Registro</h2>
       <hr class="w-50" />
 
@@ -52,8 +35,7 @@
           </div>
         </div>
         <button class="btn btn-info mb-3">Registrarme</button>
-        <p><a href="#"> Iniciar sesión</a></p>
+        <p><a href="/login"> Iniciar sesión</a></p>
       </form>
     </div>
-  </body>
-</html>
+{{>pie}}
