@@ -3,38 +3,38 @@
       <h2>Registro</h2>
       <hr class="w-50" />
 
-      <form>
+      <form id="registrar" method='POST' enctype="multipart/form-data">
         <div class="form-group row w-50 m-auto">
           <div class="form-group col-12 col-sm-6">
             <label>Email</label>
-            <input class="form-control m-auto" />
+            <input id='registrar-email' class="form-control m-auto" />
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Nombre</label>
-            <input class="form-control m-auto" />
+            <input id='registrar-nombre' class="form-control m-auto" />
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Password</label>
-            <input class="form-control m-auto" />
+            <input id='registrar-password' class="form-control m-auto" />
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Repita la password</label>
-            <input class="form-control m-auto" />
+            <input id='registrar-rpassword' class="form-control m-auto" />
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Años de experiencia</label>
-            <input class="form-control m-auto" />
+            <input id='registrar-experiecia'class="form-control m-auto" />
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Especialidad</label>
-            <input class="form-control m-auto" />
+            <input id='registrar-especialidad' class="form-control m-auto" />
           </div>
           <div class="form-group col-12 col-sm-12">
             <label>Foto de perfil</label>
-            <input type="file" />
+            <input type="file" name='fotoSkater' id="file"/>
           </div>
         </div>
-        <button class="btn btn-info mb-3">Registrarme</button>
+        <button id="btn-registro" class="btn btn-info mb-3">Registrarme</button>
         <p><a href="/login"> Iniciar sesión</a></p>
       </form>
     </div>

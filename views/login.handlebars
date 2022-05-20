@@ -3,19 +3,19 @@
     <h2>Iniciar Sesión</h2>
     <hr class="w-50" />
 
-    <form>
+    <form id="form-login">
     <div class="form-group">
         <div class="form-group">
         <label>Email</label>
-        <input class="form-control w-50 m-auto" />
+        <input id="login-email" class="form-control w-50 m-auto" />
         </div>
         <div class="form-group">
         <label>Password</label>
-        <input class="form-control w-50 m-auto" />
+        <input id="login-password" class="form-control w-50 m-auto" />
         </div>
     </div>
-    <button class="btn btn-success mb-3">Ingresar</button>
-    <p>¿Aún no tienes cuenta? <a href="#">Regístrate</a></p>
+    <button id="btn-login" class="btn btn-success mb-3">Ingresar</button>
+    <p>¿Aún no tienes cuenta? <a href="/registro">Regístrate</a></p>
     </form>
 </div>
 {{>pie}}

@@ -1,27 +1,29 @@
+{{>header}}
 <div class="py-4">
       <h2>Datos del perfil</h2>
       <hr class="w-50" />
 
-      <form>
+      <form id="form-edit">
         <div class="form-group row w-50 m-auto">
           <div class="form-group col-12 col-sm-6">
             <label>Email</label>
             <input
               class="form-control m-auto"
               disabled
-              value="tonyhawk@skate.com"
+              value="{{datos.email}}"
             />
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Nombre</label>
-            <input class="form-control m-auto" value="Tony Hawk" />
+            <input id="nombre-edit" class="form-control m-auto" value="{{datos.nombre}}" />
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Password</label>
             <input
+              id="password-edit"
               type="password"
               class="form-control m-auto"
-              value="12345678"
+              value="{{datos.password}}"
             />
           </div>
           <div class="form-group col-12 col-sm-6">
@@ -29,23 +31,27 @@
             <input
               type="password"
               class="form-control m-auto"
-              value="12345678"
+              value="{{datos.password}}"
             />
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Años de experiencia</label>
-            <input class="form-control m-auto" value="12" />
+            <input id='expe-edit' class="form-control m-auto" value="{{datos.anos_experiencia}}" />
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Especialidad</label>
-            <input class="form-control m-auto" value="Kickflip" />
+            <input id='espe-edit' class="form-control m-auto" value="{{datos.especialidad}}" />
           </div>
         </div>
         <div class="mb-1">
-          <button class="btn btn-primary">Actualizar</button>
+          <button class="btn btn-primary" id="btn-editar">Actualizar</button>
         </div>
         <div>
-          <button class="btn btn-danger">Eliminar cuenta</button>
+          <button class="btn btn-danger" id="btn-eliminar">Eliminar cuenta</button>
+        </div>
+        <div>
+          <button class="btn btn-dark mt-2" id="btn-logout">Logout</button>
         </div>
       </form>
     </div>
+    {{>pie}}
