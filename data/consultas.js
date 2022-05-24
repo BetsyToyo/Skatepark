@@ -63,4 +63,12 @@ const eliminarRegistro= async (id)=>{
     }
 }
 
-module.exports= {registro, registros, editarRegistro, eliminarRegistro}
+const skaterStatus = async (id, estado) => {
+    const result = await pool.query(
+      `UPDATE skaters SET estado = ${estado} WHERE id = ${id} RETURNING *`
+    );
+    const skater = result.rows[0];
+    return skater;
+  }
+
+module.exports= {registro, registros, editarRegistro, eliminarRegistro, skaterStatus}

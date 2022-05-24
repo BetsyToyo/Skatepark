@@ -3,7 +3,7 @@ const app = express();
 const hbs = require("express-handlebars");
 const jwt = require('jsonwebtoken');
 const expressFileUpload= require('express-fileupload');
-const {registro, registros, editarRegistro, eliminarRegistro}= require('./data/consultas.js');
+const {registro, registros, editarRegistro, eliminarRegistro, skaterStatus}= require('./data/consultas.js');
 
 app.listen(3000, () => console.log('Your app listening on port 3000'));
 
@@ -12,6 +12,7 @@ app.use(express.json());
 app.use("/assets", express.static(`${__dirname}/assets/`));
 app.use("/jquery", express.static(`${__dirname}/node_modules/jquery/dist/`));
 app.use("/axios", express.static(`${__dirname}/node_modules/axios/dist/`));
+app.use("/fotos", express.static(`${__dirname}/fotos/`));
 
 app.use(expressFileUpload({
   limits:{fileSize: 5000000},
@@ -31,9 +32,19 @@ app.engine(
   })
 );
 
-app.get("/", async (request, response) => {
-    response.render("index", {
-      layout: "index",          
+app.get("/", async (req, res) => {
+  const skaters= await registros()    
+    res.render("index", {
+      layout: "index",
+      datos: skaters.map((skater)=>{
+        return {id: skater.id, 
+                foto: skater.foto, 
+                nombre: skater.nombre, 
+                experiencia: skater.anos_experiencia,
+                especialidad: skater.especialidad,
+                estado: skater.estado
+                }
+      }),               
     });
   });
 
@@ -45,7 +56,22 @@ app.get('/registro', (req, res) => {
   res.render("registro",{ layout: 'registro'});
 })
 
-
+//Correo para poder acceder a la pagina de admin admin@gmail.com, a traves del front
+app.get("/admin", async (req, res) => {
+  const skaters= await registros()    
+    res.render("admin", {
+      layout: "admin",
+      datos: skaters.map((skater)=>{
+        return {id: skater.id, 
+                foto: skater.foto, 
+                nombre: skater.nombre, 
+                experiencia: skater.anos_experiencia,
+                especialidad: skater.especialidad,
+                estado: skater.estado
+                }
+      }),               
+    });
+  });
 
 app.post('/registro',(req,res)=>{
   const{email, nombre, password, experiencia, especialidad}=req.body;
@@ -67,15 +93,15 @@ app.post('/registro',(req,res)=>{
 app.post("/login", async(req, res) => {
   const { email, password } = req.body;  
   const skaters=await registros()  
-  const skater = skaters.find(skater => skater.email == email && skater.password == password);
-  
+  const skater = skaters.find(skater => skater.email == email && skater.password == password);  
   if(!skater){
     res.status(403).send({ message: 'Credenciales inválidas'})
 } else {
     const token = jwt.sign(skater, llaveSecreta);
     res.send({
         message: 'Autenticación exitosa',
-        token: token
+        token: token,
+        skater: skater.email
     });
 }
 })
@@ -111,6 +137,21 @@ app.put('/registro', async(req, res)=>{
   res.status(respuesta.mensaje? 500 : 201).json(respuesta.mensaje? respuesta.mensaje : respuesta )    
 
 })
+
+app.put("/registro/status/:id", async (req, res) => {
+  const { id } = req.params;
+  const { estado } = req.body;
+  try {
+      await skaterStatus(id, estado);
+      res.status(200).send("Estatus de skater cambiado con éxito");
+  } catch (error) {
+      res.status(500).send({
+          error: `Algo salió mal... ${error}`,
+          code: 500
+      })
+  };
+});
+
  app.delete('/registro', async (req, res)=>{
    const id= req.query.id
     const respuesta= await eliminarRegistro(id)

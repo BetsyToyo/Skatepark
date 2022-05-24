@@ -46,9 +46,14 @@ $(function(){
             data: {email: $('#login-email').val(),
                     password: $('#login-password').val()},
             success: function(data){
-                alert(data.message);
-                localStorage.setItem("token", data.token)
-                $(location).attr('href','http://localhost:3000/datos');
+                alert(data.message);                
+                localStorage.setItem("token", data.token) 
+               if (data.skater == 'admin@gmail.com') {
+                    $(location).attr('href','http://localhost:3000/admin');
+               } else {
+                    $(location).attr('href','http://localhost:3000/datos');
+               }              
+               
                 inputsDatos()
             },
             error: function(error){
@@ -75,7 +80,7 @@ $(function(){
             },
             success: function(data){                
                 idEdicion= data.data[0].id
-                console.log(data.data[0].id)
+                
             },
             error: function(error){
                 if(error.status == 403){
@@ -87,12 +92,11 @@ $(function(){
             }
         })
     }    
-    inputsDatos()
+    
     
     $("#btn-editar").click(function(event){
-        event.preventDefault();
-        console.log(idEdicion)
-    
+        event.preventDefault();      
+        idEdicion= $('#oculto').val()
         $.ajax({
             method: 'PUT',
             url: '/registro',
@@ -105,7 +109,8 @@ $(function(){
                 },
                         
             success: function(){
-                alert('Usuario editado con exito');                
+                alert('Usuario editado con exito');   
+                            
             },
             error: function(error){
                 alert(error.message)
@@ -115,8 +120,8 @@ $(function(){
 
     $("#btn-eliminar").click(function(event){
         event.preventDefault();
-        console.log(idEdicion)
-    
+                    
+        idEdicion= $('#oculto').val()
         $.ajax({
             method: 'DELETE',
             url: `/registro?id=${idEdicion}`,
@@ -134,9 +139,11 @@ $(function(){
         })
     })
 
-    $("#btn-logout").click(function() {
+    
+    $("#btn-logout").click(function() {   
         localStorage.removeItem("token");
-        $(location).attr('href','http://localhost:3000/');
+        window.location.href='/';
+        return false 
     })
 
    

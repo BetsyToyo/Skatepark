@@ -1,3 +1,4 @@
+{{>header}}
 <div class="py-4">
       <h2>Administración</h2>
       <hr class="w-50" />
@@ -14,30 +15,39 @@
           </tr>
         </thead>
         <tbody>
+           {{#each datos}}
           <tr>
-            <th scope="row">1</th>
-            <td><div></div></td>
-            <td>Tony Hawk</td>
-            <td>12</td>
-            <td>Kickflip</td>
-            <td><input type="checkbox" checked /></td>
+            <th scope="row">{{id}}</th>
+            <td><div><img src="http://localhost:3000/fotos/{{foto}}" alt="foto skater" width="40px" height="auto"></div></td>
+            <td>{{nombre}}</td>
+            <td>{{experiencia}}</td>
+            <td>{{especialidad}}</td> 
+            <td>           
+            {{#if estado}}
+            <input type="checkbox" checked onclick="status({{id}}, this)">
+            {{else}}
+            <input type="checkbox" onclick="status({{id}}, this)">
+            {{/if}}
+            </td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td><div></div></td>
-            <td>Evelien Bouilliart</td>
-            <td>10</td>
-            <td>Heelflip</td>
-            <td><input type="checkbox" checked /></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td><div></div></td>
-            <td>Danny Way</td>
-            <td>8</td>
-            <td>Ollie</td>
-            <td><input type="checkbox" /></td>
-          </tr>
+          {{/each}}
         </tbody>
       </table>
-    </div>
+</div>  
+<script>
+   const status = async (id, e) => {
+
+        const estado = e.checked
+        try {
+          await axios.put(`/registro/status/${id}`, {
+            estado
+          })
+          alert(estado ? "Skater aprobado!" : "Skater En revisión")
+        } catch ({ response }) {
+          alert(response.data.error)
+        }
+    
+      }
+</script>
+    
+    {{>pie}}
