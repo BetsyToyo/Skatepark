@@ -7,6 +7,8 @@ const {registro, registros, editarRegistro, eliminarRegistro, skaterStatus}= req
 
 app.listen(3000, () => console.log('Your app listening on port 3000'));
 
+//Middlewares
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use("/assets", express.static(`${__dirname}/assets/`));
@@ -20,7 +22,6 @@ app.use(expressFileUpload({
   responseOnLimit: 'El peso del archivo que intentas subir supera el limite permitido'
 }));
 
-
 const llaveSecreta= 'Skaters2022'
 
 app.set("view engine", "handlebars");
@@ -32,6 +33,7 @@ app.engine(
   })
 );
 
+//Rutas para renderizar los handlebars
 app.get("/", async (req, res) => {
   const skaters= await registros()    
     res.render("index", {
@@ -56,7 +58,7 @@ app.get('/registro', (req, res) => {
   res.render("registro",{ layout: 'registro'});
 })
 
-//Correo para poder acceder a la pagina de admin admin@gmail.com, a traves del front
+//Correo para poder acceder a la pagina de admin admin@gmail.com.
 app.get("/admin", async (req, res) => {
   const skaters= await registros()    
     res.render("admin", {
@@ -72,6 +74,8 @@ app.get("/admin", async (req, res) => {
       }),               
     });
   });
+
+//Ruta para registro de Usuario
 
 app.post('/registro',(req,res)=>{
   const{email, nombre, password, experiencia, especialidad}=req.body;
@@ -90,6 +94,8 @@ app.post('/registro',(req,res)=>{
 })     
 })
 
+//ruta de Login y creacion de token
+
 app.post("/login", async(req, res) => {
   const { email, password } = req.body;  
   const skaters=await registros()  
@@ -105,6 +111,8 @@ app.post("/login", async(req, res) => {
     });
 }
 })
+
+//Envio de datos al formulario de datos de usuario
 
 let skaterData;
 
@@ -132,12 +140,15 @@ app.get('/registros',async(req, res)=>{
   res.json({data: skater, message: "datos obtenidos"})
 })
 
+//Modificacion de datos de Skater
+
 app.put('/registro', async(req, res)=>{ 
   const respuesta= await editarRegistro(req.body)
   res.status(respuesta.mensaje? 500 : 201).json(respuesta.mensaje? respuesta.mensaje : respuesta )    
 
 })
 
+//Modificacion de status en tabla administrador
 app.put("/registro/status/:id", async (req, res) => {
   const { id } = req.params;
   const { estado } = req.body;
@@ -151,6 +162,8 @@ app.put("/registro/status/:id", async (req, res) => {
       })
   };
 });
+
+//eliminnar patinador
 
  app.delete('/registro', async (req, res)=>{
    const id= req.query.id

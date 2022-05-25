@@ -121,10 +121,10 @@ $(function(){
     $("#btn-eliminar").click(function(event){
         event.preventDefault();
                     
-        idEdicion= $('#oculto').val()
+        idEliminar= $('#oculto').val()
         $.ajax({
             method: 'DELETE',
-            url: `/registro?id=${idEdicion}`,
+            url: `/registro?id=${idEliminar}`,
             dataType: 'json',             
                     
             success: function(){
